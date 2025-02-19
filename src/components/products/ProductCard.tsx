@@ -7,6 +7,14 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0,
+    }).format(price * 83); // Approximate USD to INR conversion
+  };
+
   return (
     <Link
       to={`/products/${product.id}`}
@@ -23,7 +31,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         <h3 className="text-shop-900 font-medium group-hover:text-shop-600 transition-colors">
           {product.name}
         </h3>
-        <p className="text-shop-600">${product.price.toFixed(2)}</p>
+        <p className="text-shop-600">{formatPrice(product.price)}</p>
+        <p className="text-shop-500 text-sm">{product.subcategory}</p>
       </div>
     </Link>
   );

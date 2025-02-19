@@ -6,4 +6,14 @@ export interface Product {
   price: number;
   image: string;
   category: string;
+  subcategory: string;
+}
+
+export interface Category {
+  name: string;
+  image: string;
+  subcategories: {
+    name: string;
+    description: string;
+  }[];
 }
