@@ -1,9 +1,9 @@
-
 import { useParams } from "react-router-dom";
 import ProductCard from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import { Product } from "@/types/product";
+import { useToast } from "@/components/ui/use-toast";
 
 // Mock data for all products
 const allProducts: Product[] = [
@@ -34,7 +34,6 @@ const allProducts: Product[] = [
     category: "Bags",
     subcategory: "Travel Bags",
   },
-  // Additional products in Electronics category
   {
     id: "4",
     name: "Noise-Cancelling Earbuds",
@@ -53,7 +52,6 @@ const allProducts: Product[] = [
     category: "Electronics",
     subcategory: "Wireless Audio",
   },
-  // Additional products in Watches category
   {
     id: "6",
     name: "Smart Watch Pro",
@@ -72,11 +70,84 @@ const allProducts: Product[] = [
     category: "Accessories",
     subcategory: "Analog Watches",
   },
+  {
+    id: "8",
+    name: "Wireless Gaming Headset",
+    description: "Low-latency gaming headset with surround sound",
+    price: 199.99,
+    image: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    category: "Electronics",
+    subcategory: "Wireless Audio",
+  },
+  {
+    id: "9",
+    name: "Sport Smartwatch",
+    description: "Fitness tracking smartwatch with heart rate monitor",
+    price: 179.99,
+    image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    category: "Accessories",
+    subcategory: "Smart Watches",
+  },
+  {
+    id: "10",
+    name: "Luxury Dress Watch",
+    description: "Elegant dress watch with gold-plated case",
+    price: 399.99,
+    image: "https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    category: "Accessories",
+    subcategory: "Analog Watches",
+  },
+  {
+    id: "11",
+    name: "Premium TWS Earbuds",
+    description: "True wireless earbuds with premium sound quality",
+    price: 149.99,
+    image: "https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    category: "Electronics",
+    subcategory: "Wireless Audio",
+  },
+  {
+    id: "12",
+    name: "Fitness Tracker",
+    description: "Advanced fitness tracker with sleep monitoring",
+    price: 79.99,
+    image: "https://images.unsplash.com/photo-1557935728-e6d1eaabe558?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    category: "Accessories",
+    subcategory: "Smart Watches",
+  },
+  {
+    id: "13",
+    name: "Professional Studio Headphones",
+    description: "Studio-grade headphones for music production",
+    price: 449.99,
+    image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    category: "Electronics",
+    subcategory: "Wireless Audio",
+  },
+  {
+    id: "14",
+    name: "Classic Leather Watch",
+    description: "Timeless leather strap watch with minimalist design",
+    price: 299.99,
+    image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    category: "Accessories",
+    subcategory: "Analog Watches",
+  },
+  {
+    id: "15",
+    name: "Kids Smart Watch",
+    description: "Child-friendly smartwatch with GPS tracking",
+    price: 129.99,
+    image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+    category: "Accessories",
+    subcategory: "Smart Watches",
+  }
 ];
 
 export default function ProductDetails() {
   const { id } = useParams();
   const product = allProducts.find((p) => p.id === id);
+  const { toast } = useToast();
 
   if (!product) {
     return (
@@ -101,6 +172,14 @@ export default function ProductDetails() {
     .filter((p) => p.id !== product.id && 
       (p.category === product.category || p.subcategory === product.subcategory))
     .slice(0, 12);
+
+  const handleAddToCart = () => {
+    toast({
+      title: "Added to Cart",
+      description: `${product.name} has been added to your cart`,
+      duration: 3000,
+    });
+  };
 
   return (
     <div className="min-h-screen pt-24 px-4">
@@ -134,7 +213,7 @@ export default function ProductDetails() {
               <p className="text-shop-500">Subcategory: {product.subcategory}</p>
             </div>
 
-            <Button size="lg" className="w-full md:w-auto">
+            <Button size="lg" className="w-full md:w-auto" onClick={handleAddToCart}>
               <ShoppingCart className="mr-2" />
               Add to Cart
             </Button>
